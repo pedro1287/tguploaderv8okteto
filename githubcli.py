@@ -113,7 +113,7 @@ class GithubCli(object):
         authenticity_token = formverify.find('input',{'name':'authenticity_token'})['value']
         authenticity_token2 = formverifyresend.find('input',{'name':'authenticity_token'})['value']
         payload = {'authenticity_token':authenticity_token,'otp':code}
-        resp = self.session.post(resp.url,data=payload,headers=headers)
+        resp = self.session.post(f'{self.host}sessions/verified-device',data=payload,headers=headers)
         if resp.status_code == 422:
             payload['authenticity_token'] = authenticity_token2
             resp = self.session.post(resp.url,data=payload,headers=headers)
@@ -224,17 +224,16 @@ class GithubCli(object):
 
 
 
+#cli = GithubCli('obysoftttt@gmail.com','Obysoft2001@','Obysoftttt')
+#status,loged,resp = cli.login()
 
-cli = GithubCli('obysoftttt@gmail.com','Obysoft2001@','Obysoftttt')
-status,loged,resp = cli.login()
-
-if status==3:
+#if status==3:
     #verify code
-    verify = False
-    while not verify:
-        print('Verify Send Code To '+cli.username+'...')
-        verify = cli.verify_device(input(),resp)
+#    verify = False
+#    while not verify:
+#        print('Verify Send Code To '+cli.username+'...')
+#        verify = cli.verify_device(input(),resp)
 
-if loged:
-   print('Loged!')
-   data = cli.upload_file('requirements.txt',user='obisoftdev')
+#if loged:
+#   print('Loged!')
+#   data = cli.upload_file('requirements.txt',user='obisoftdev')
