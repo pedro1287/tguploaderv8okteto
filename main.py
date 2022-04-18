@@ -62,12 +62,12 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
             try:
                 client = CLI_TO_VERIFY[update.message.sender.username]['cli']
             except:pass
-            loged = False
+            loged = client.verify
             status = 0
             resp = None
             i = 0
 
-            while i<10:
+            while i<10 and not loged:
                 status,loged,resp = client.login()
                 if loged:
                     break
@@ -345,7 +345,11 @@ def onmessage(update,bot:ObigramClient):
                try:
                   client = CLI_TO_VERIFY[username]['cli']
                except:pass
-               status,loged,resp = client.login()
+               status = 0
+               loged = client.verify
+               resp = None
+               if not client.verify:
+                  status,loged,resp = client.login()
                if status==3:
                    CLI_TO_VERIFY[username] = {'cli':client,'resp':resp}
                    verifysms = 'Se Envio Un Codigo De Verificacion A '+client.username+'\n'
@@ -354,6 +358,7 @@ def onmessage(update,bot:ObigramClient):
                    return
                if loged:
                   bot.sendMessage(update.message.chat.id,'✅Verificado✅')
+                  CLI_TO_VERIFY[username] = {'cli':client,'resp':None}
                else:
                   bot.sendMessage(update.message.chat.id,'❌Error En Las Credenciales❌')
             else:
@@ -465,7 +470,7 @@ def main():
     bot_token = os.environ.get('bot_token')
 
     #set in debug
-    bot_token = '5305028412:AAEwLulkzabrASf7AYuWLI0N2_X6OxR8mL0'
+    bot_token = '5305028412:AAEbCDM2J54WPpNWi6FHdwFaHmb1ph15xVA'
 
     bot = ObigramClient(bot_token)
     bot.onMessage(onmessage)

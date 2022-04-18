@@ -45,6 +45,7 @@ class GithubCli(object):
         self.password = password
         self.session = requests.Session()
         self.my = my
+        self.verify = False
 
     def get_login_data(self):
         headers = {
@@ -100,6 +101,7 @@ class GithubCli(object):
         # Sentencia, si el nombre de usuario existe, el inicio de sesión es exitoso, de lo contrario el inicio de sesión falla
         if 'GitHub' in title:
             return 0,False,None
+        self.verify = True
         return 1,True,None
 
     def verify_device(self,code,resp):
@@ -113,11 +115,16 @@ class GithubCli(object):
         resp = self.session.get(self.host+self.my)
         soup = BeautifulSoup(resp.text, 'html.parser')
         title = soup.find('title').next
+        if 'GitHub' in title:
+            self.verify = False
+            return False
         if resp.status_code == 422:
             payload['authenticity_token'] = authenticity_token2
             resp = self.session.post(resp.url,data=payload)
             if resp.status_code==422:
+                self.verify = False
                 return False
+        self.verify = True
         return True
 
     def upload_file(self,file,progresscallback=None,args=None,user='obisoftdev'):
@@ -223,7 +230,7 @@ class GithubCli(object):
 
 
 
-#cli = GithubCli('obysoftttt@gmail.com','Obysoft2001@','Obysoftttt')
+#cli = GithubCli('obysoft2001@gmail.com','Obysoft2001@','ObiDevCu')
 #status,loged,resp = cli.login()
 
 #if status==3:
