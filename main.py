@@ -59,6 +59,9 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
         cloudtype = 'github'
         if cloudtype == 'github':
             client = GithubCli(user_info['login'],user_info['password'],user_info['githubuser'])
+            try:
+                client = CLI_TO_VERIFY[update.message.sender.username]['cli']
+            except:pass
             loged = False
             status = 0
             resp = None
@@ -339,6 +342,9 @@ def onmessage(update,bot:ObigramClient):
                 code = tokens[1]
             if not code:
                client = GithubCli(user_info['login'],user_info['password'],user_info['githubuser'])
+               try:
+                  client = CLI_TO_VERIFY[username]['cli']
+               except:pass
                status,loged,resp = client.login()
                if status==3:
                    CLI_TO_VERIFY[username] = {'cli':client,'resp':resp}
@@ -459,7 +465,7 @@ def main():
     bot_token = os.environ.get('bot_token')
 
     #set in debug
-    bot_token = '5305028412:AAFzxYnvzW9bCHYwxBleRoRm_P9VuWsHJnU'
+    bot_token = '5305028412:AAEwLulkzabrASf7AYuWLI0N2_X6OxR8mL0'
 
     bot = ObigramClient(bot_token)
     bot.onMessage(onmessage)

@@ -103,20 +103,19 @@ class GithubCli(object):
         return 1,True,None
 
     def verify_device(self,code,resp):
-        headers = {
-         'Content-Type':'application/x-www-form-urlencoded',
-         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
-        }
         soup = BeautifulSoup(resp.text, 'html.parser')
         formverify = soup.find('form',{'action':'/sessions/verified-device'})
         formverifyresend = soup.find('form',{'action':'/sessions/verified-device/resend'})
         authenticity_token = formverify.find('input',{'name':'authenticity_token'})['value']
         authenticity_token2 = formverifyresend.find('input',{'name':'authenticity_token'})['value']
         payload = {'authenticity_token':authenticity_token,'otp':code}
-        resp = self.session.post(f'{self.host}sessions/verified-device',data=payload,headers=headers)
+        resp = self.session.post(f'{self.host}sessions/verified-device',data=payload)
+        resp = self.session.get(self.host+self.my)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        title = soup.find('title').next
         if resp.status_code == 422:
             payload['authenticity_token'] = authenticity_token2
-            resp = self.session.post(resp.url,data=payload,headers=headers)
+            resp = self.session.post(resp.url,data=payload)
             if resp.status_code==422:
                 return False
         return True
