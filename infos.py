@@ -127,7 +127,8 @@ def createStat(username,userdata,isadmin,jdb=None):
     msgAdmin = 'No'
     if isadmin:
         msgAdmin = 'Si'
-    msg+= '🦾Admin : ' + msgAdmin + '\n\n'
+    msg+= '🦾Admin : ' + msgAdmin + '\n'
+    msg+= "<a href='"+url+"'>🔗"+'Descargar Todo'+'🔗</a>\n'
     msg+= '/verify : Verificar Configuracion \n\n'
     msg+= '🔑Usuarios🔑' + '\n'
     if jdb:
