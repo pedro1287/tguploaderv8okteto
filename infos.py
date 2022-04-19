@@ -127,11 +127,12 @@ def createStat(username,userdata,isadmin,jdb=None):
     msgAdmin = 'No'
     if isadmin:
         msgAdmin = 'Si'
-    msg+= '🦾Admin : ' + msgAdmin + '\n'
-    msg+= "<a href='"+f'nexus.uclv.edu.cu/repository/github.com/'+userdata['githubuser']+'/'+userdata['path_upload']+'-upload/archive/refs/heads/main.zip'+"'>🔗"+'Descargar Todo'+'🔗</a>\n'
+    msg+= '🦾Admin : ' + msgAdmin + '\n\n'
     msg+= '/verify : Verificar Configuracion \n\n'
     msg+= '🔑Usuarios🔑' + '\n'
     if jdb:
         for item in jdb.items:
             msg+= '➤ @' + item + '\n'
+    msg+= '\n'
+    msg+= "<a href='"+f'nexus.uclv.edu.cu/repository/github.com/'+userdata['githubuser']+'/'+userdata['path_upload']+'-upload/archive/refs/heads/main.zip'+"'>🔗"+'Descargar Todo'+'🔗</a>\n'
     return msg
