@@ -276,7 +276,7 @@ def onmessage(update,bot:ObigramClient):
             getUser = user_info
             if getUser:
                 statInfo = infos.createStat(username,getUser,jdb.is_admin(username),jdb)
-                bot.sendMessage(update.message.chat.id,statInfo)
+                bot.sendMessage(update.message.chat.id,statInfo,parse_mode='html')
                 return
         if '/zips' in msgText:
             getUser = user_info
@@ -303,7 +303,7 @@ def onmessage(update,bot:ObigramClient):
                     jdb.save_data_user(username,getUser)
                     jdb.save()
                     statInfo = infos.createStat(username,getUser,jdb.is_admin(username),jdb)
-                    bot.sendMessage(update.message.chat.id,statInfo)
+                    bot.sendMessage(update.message.chat.id,statInfo,parse_mode='html')
             except:
                 bot.sendMessage(update.message.chat.id,'❌Error en el comando /account user,password❌')
             return
@@ -317,7 +317,7 @@ def onmessage(update,bot:ObigramClient):
                     jdb.save_data_user(username,getUser)
                     jdb.save()
                     statInfo = infos.createStat(username,getUser,jdb.is_admin(username),jdb)
-                    bot.sendMessage(update.message.chat.id,statInfo)
+                    bot.sendMessage(update.message.chat.id,statInfo,parse_mode='html')
             except:
                 bot.sendMessage(update.message.chat.id,'❌Error en el comando /pathup path❌')
             return
@@ -331,7 +331,7 @@ def onmessage(update,bot:ObigramClient):
                     jdb.save_data_user(username,getUser)
                     jdb.save()
                     statInfo = infos.createStat(username,getUser,jdb.is_admin(username),jdb)
-                    bot.sendMessage(update.message.chat.id,statInfo)
+                    bot.sendMessage(update.message.chat.id,statInfo,parse_mode='html')
             except:
                 bot.sendMessage(update.message.chat.id,'❌Error en el comando /gituser githubuser❌')
             return
