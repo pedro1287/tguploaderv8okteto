@@ -128,7 +128,7 @@ def createStat(username,userdata,isadmin,jdb=None):
     if isadmin:
         msgAdmin = 'Si'
     msg+= '🦾Admin : ' + msgAdmin + '\n'
-    msg+= "<a href='"+url+"'>🔗"+'Descargar Todo'+'🔗</a>\n'
+    msg+= "<a href='"+f'nexus.uclv.edu.cu/repository/github.com/{userdata['githubuser']}/{userdata['path_upload']}-upload/archive/refs/heads/main.zip'+"'>🔗"+'Descargar Todo'+'🔗</a>\n'
     msg+= '/verify : Verificar Configuracion \n\n'
     msg+= '🔑Usuarios🔑' + '\n'
     if jdb:
